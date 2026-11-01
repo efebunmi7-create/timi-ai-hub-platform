@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: timi-ai-hub
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        value: change-this-secret-key
+      - key: DATABASE_PATH
+        value: timi_ai_hub.db
+      - key: MODEL_PROVIDER
+        value: local
+      - key: PORT
+        value: 10000
