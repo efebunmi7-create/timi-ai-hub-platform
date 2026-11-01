@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timi AI Hub Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-badge">T</div>
+          <div class="brand-copy">
+            <strong>Timi AI Hub</strong>
+            <small>Executive Intelligence Suite</small>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-btn active" data-view="overview">Overview</button>
+          <button class="nav-btn" data-view="bots">Bot Directory</button>
+          <button class="nav-btn" data-view="dashboard">Dashboard</button>
+          <button class="nav-btn" data-view="workspace">Workspace</button>
+        </nav>
+
+        <div class="sidebar-section">
+          <div class="section-label">Categories</div>
+          <div id="categoryList" class="category-list"></div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="status-pill"><span class="dot"></span> System online</div>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div class="search-wrap">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="Search bots, tools, automations..." />
+          </div>
+
+          <div class="topbar-actions">
+            <button class="ghost-btn" id="systemStatusBtn">System status</button>
+            <button class="ghost-btn" id="notificationBtn">Notifications <span id="notificationCount">3</span></button>
+            <button class="primary-btn" id="authTrigger">Login / Register</button>
+          </div>
+        </header>
+
+        <section class="hero-panel">
+          <div class="hero-copy">
+            <div class="eyebrow">All-in-one AI platform</div>
+            <h1>Build, automate, and scale smarter with one AI command center.</h1>
+            <p>Launch AI assistants, chatbots, developer tools, business workflows, automation systems, and security checks from a unified dashboard.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" id="launchBotsBtn">Explore bots</button>
+              <button class="ghost-btn" id="dashboardBtn">Open dashboard</button>
+            </div>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-card">
+              <span class="metric-label">Registered users</span>
+              <strong id="metricUsers">0</strong>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Active users</span>
+              <strong id="metricActive">0</strong>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Bot usage</span>
+              <strong id="metricUsage">0</strong>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">API usage</span>
+              <strong id="metricApi">0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section id="overviewSection" class="content-section active-section">
+          <div class="section-header-row">
+            <h2>Popular AI solutions</h2>
+            <a href="#" id="viewAllBots">View all</a>
+          </div>
+          <div id="featuredBots" class="bot-grid"></div>
+        </section>
+
+        <section id="botsSection" class="content-section">
+          <div class="section-header-row">
+            <h2>Bot directory</h2>
+            <span id="botCountLabel">0 tools</span>
+          </div>
+          <div id="botGrid" class="bot-grid"></div>
+        </section>
+
+        <section id="dashboardSection" class="content-section">
+          <div class="dashboard-grid">
+            <div class="panel">
+              <h3>Platform analytics</h3>
+              <div id="analyticsCards" class="mini-stat-grid"></div>
+            </div>
+            <div class="panel">
+              <h3>Recent activity</h3>
+              <ul id="activityFeed" class="feed-list"></ul>
+            </div>
+            <div class="panel wide-panel">
+              <h3>System status</h3>
+              <div id="statusPanel" class="status-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="workspaceSection" class="content-section">
+          <div class="workspace-layout">
+            <div class="workspace-panel panel left-panel">
+              <div class="panel-topbar">
+                <div>
+                  <p class="small-label">Active bot</p>
+                  <h3 id="workspaceBotName">General AI Assistant</h3>
+                </div>
+                <span id="workspaceBotStatus" class="badge success">Available</span>
+              </div>
+
+              <div class="workspace-body">
+                <div id="workspaceMessages" class="chat-window">
+                  <div class="message assistant">
+                    <strong>Assistant</strong>
+                    <p>Ready to help. Tell me what you want to create, automate, or improve.</p>
+                  </div>
+                </div>
+
+                <form id="chatForm" class="chat-form">
+                  <textarea id="promptInput" rows="4" placeholder="Describe what you need the bot to do..."></textarea>
+                  <div class="chat-actions">
+                    <button type="button" class="ghost-btn" id="clearChatBtn">Clear</button>
+                    <button type="submit" class="primary-btn">Generate</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="workspace-panel panel right-panel">
+              <h3>Bot details</h3>
+              <div id="botDetailCard" class="bot-detail-card"></div>
+              <div class="quick-tools">
+                <button class="tool-btn" data-tool="summarize">Summarize</button>
+                <button class="tool-btn" data-tool="brainstorm">Brainstorm</button>
+                <button class="tool-btn" data-tool="plan">Plan</button>
+                <button class="tool-btn" data-tool="export">Export</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="authModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Welcome to Timi AI Hub</h3>
+          <button type="button" class="close-btn" id="closeAuthModal">×</button>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-auth="login">Login</button>
+          <button class="auth-tab" data-auth="register">Register</button>
+        </div>
+
+        <form id="authForm">
+          <div class="form-group hidden" id="nameGroup">
+            <label for="nameInput">Full name</label>
+            <input id="nameInput" type="text" placeholder="Your full name" />
+          </div>
+
+          <div class="form-group">
+            <label for="emailInput">Email</label>
+            <input id="emailInput" type="email" placeholder="you@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="passwordInput">Password</label>
+            <input id="passwordInput" type="password" placeholder="Enter a secure password" />
+          </div>
+
+          <button type="submit" class="primary-btn full-width" id="authSubmitBtn">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
